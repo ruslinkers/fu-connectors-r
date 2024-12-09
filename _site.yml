@@ -1,6 +1,6 @@
 name: "ruslinkers"
 navbar:
-  title: "Осетинские коннекторы"
+  title: "Бежтинские коннекторы"
   left:
     - text: "Главная"
       href: index.html
