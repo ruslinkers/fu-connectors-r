@@ -16,96 +16,47 @@ source("shared.R")
 ```
 
 ```{r render table}
-reactable(linkers,
+reactable(linkers2,
           defaultPageSize = 100,
           filterable = TRUE,
           searchable = FALSE, 
           showSortable = TRUE, 
           showSortIcon = TRUE,
-          groupBy = "marker",
-          details = function(index) {
-            htmltools::div(paste(linkers[index, "example"]), htmltools::br(), paste(linkers[index, "tr.ru"]))
-          },
+          # groupBy = "marker",
+          defaultSorted = "marker",
+          details = colDef(details = function(index) {
+            # if(!is.na(linkers2$ex[index]) & !is.na(linkers2$ex.gl[index])) {
+              makegl(linkers2$ex[index],linkers2$ex.gl[index],linkers2$ex.tr.ru[index])
+            # }
+          }),
           columns = list(
-            gloss.ru = colDef(name='Перевод'),
-            semfield = colDef(name = 'Семантическое поле',
+            label = colDef(name='Термин'),
+            semfield1 = colDef(name = 'Семантическое поле',
                               filterInput = filterList),
-            marker = colDef(name = 'Коннектор'),
-            corr = colDef(name='Коррелят'),
-            example = colDef(name='Пример', show = FALSE),
-            tr.ru = colDef(show = FALSE),
-            correl.pos = colDef(name = 'Позиция коррелята',
-                                html= TRUE,
+            marker = colDef(name = 'Показатель'),
+            ex = colDef(show = FALSE),
+            ex.gl = colDef(show = FALSE),
+            ex.tr.ru = colDef(show = FALSE),
+            submeaning = colDef(name = 'Подзначение',
+                                filterInput = filterList),
+            subord.pos = colDef(name = 'Позиция зависимой клаузы в составе главной',
+                                html= FALSE,
                                 filterInput = filterList,
                                 details = function(index) {
-                                  if(!is.na(linkers[index, "correl.pos.ex"])) {
-                                    paste(linkers[index, "correl.pos.ex"])
-                                  }
+                                  makegl(linkers2$subord.pos.ex[index],linkers2$subord.pos.ex.gl[index],linkers2$subord.pos.ex.tr.ru[index])
                                 }),
-            correl.pos.ex = colDef(show = FALSE),
-            correl.omit = colDef(name = 'Опущение коррелята',
-                                 html = TRUE,
-                                 filterInput = filterList,
-                                 details = function(index) {
-                                  if(!is.na(linkers[index, "correl.omit.ex"])) {
-                                    paste(linkers[index, "correl.omit.ex"])
-                                  }
-                                }),
-            correl.omit.ex = colDef(show = FALSE),
-            clause.pos = colDef(name = 'Позиция клаузы с коннектором',
-                                html = TRUE,
-                                filterInput = filterList,
-                                details = function(index) {
-                                  if(!is.na(linkers[index, "clause.pos.ex"])) {
-                                    paste(linkers[index, "clause.pos.ex"])
-                                  }
-                                }),
-            clause.pos.ex = colDef(show = FALSE),
-            conn.pos = colDef(name = 'Позиция коннектора',
-                              filterInput = filterList,
-                              html = TRUE,
-                                 details = function(index) {
-                                  if(!is.na(linkers[index, "conn.pos.ex"])) {
-                                    paste(linkers[index, "conn.pos.ex"])
-                                  }
-                                }),
-            conn.pos.ex = colDef(show = FALSE),
-            correl.mod = colDef(name = 'Модификация коррелята',
-                                html = TRUE,
-                                 filterInput = filterList,
-                                 details = function(index) {
-                                  if(!is.na(linkers[index, "correl.mod.ex"])) {
-                                    paste(linkers[index, "correl.mod.ex"])
-                                  }
-                                }),
-            correl.mod.ex = colDef(show = FALSE),
-            focus = colDef(name = 'Фокусирование',
-                           html = TRUE,
-                           filterInput = filterList,
-                           details = function(index) {
-                             if(!is.na(linkers[index, "focus.ex"])) {
-                               paste(linkers[index, "focus.ex"])
-                             }
-                                }),
-            focus.ex = colDef(show = FALSE),
-            clause.indep = colDef(name = 'Независимое употребление',
-                                  html = TRUE,
-                                  filterInput = filterList,
-                                  details = function(index) {
-                                    if(!is.na(linkers[index, "clause.indep.ex"])) {
-                                      paste(linkers[index, "clause.indep.ex"])
-                                    }
-                                  }),
-            clause.indep.ex = colDef(show = FALSE),
-            illoc = colDef(name='Иллокутивное употребление',
-                           html = TRUE,
-                           filterInput = filterList,
-                           details = function(index) {
-                             if(!is.na(linkers[index, "illoc.ex"])) {
-                               paste(linkers[index, "illoc.ex"])
-                             }
-                           }),
-            illoc.ex = colDef(show=FALSE)
+            subord.pos.ex = colDef(show = FALSE),
+            subord.pos.ex.gl = colDef(show = FALSE),
+            subord.pos.ex.tr.ru = colDef(show = FALSE),
+            mainpart.comp = colDef(name = 'Состав основной части коннектора',
+                                   filterInput = filterList),
+            comps = colDef(show = FALSE),
+            comps.sep = colDef(show = FALSE),
+            morph.pos = colDef(name = 'Позиция морфемы/союза'),
+            indep = colDef(name = 'Способность употребляться в независимом предложении',
+                           filterInput = filterList),
+            additive = colDef(name = 'Присоединение аддитивной частицы',
+                              filterInput = filterList)
           ),
           # details = function(index) { detailsFunc(index, linkers) },
           elementId = "linkertbl")
