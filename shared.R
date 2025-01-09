@@ -10,9 +10,13 @@ knitr::opts_chunk$set(echo=FALSE, message=FALSE)
 # Load data
 # read.csv("nov23-all.csv",stringsAsFactors = FALSE) -> linkers
 # read.xlsx("bezhta-17-12-2024.xlsx", na.strings=c("NA","")) -> linkers
-read_excel("bezhta-17-12-2024.xlsx",
+read_excel("FU_database_draft.xlsx",
            na=c("NA",""),
-           .name_repair = ~ janitor::make_clean_names(string=.x,ascii=FALSE,case="none",sep_out=".")) %>% janitor::remove_empty() -> linkers
+           .name_repair = ~ janitor::make_clean_names(string=.x,
+                                                      ascii=FALSE,
+                                                      case="none",
+                                                      sep_out=".")) %>% 
+  janitor::remove_empty() -> linkers
 
 # normalize_factor <- function(f) {
 #   out <- str_to_lower(f)
@@ -43,24 +47,14 @@ linkers %>%
   ) %>%
   mutate(
     # id = as.numeric(id),
-    marker = as.character(Маркер),
-    semfield1 = as.factor(Сем.зона1),    
-    label = as.character(Термин),
-    sem.comment = as.character(Сем.комментарий),
-    ex = as.character(fix_commas(str_squish(Основной.пример))),
-    ex.gl = as.character(fix_commas(str_squish(Глоссы))),
-    ex.tr.ru = as.character(Перевод),
-    submeaning = as.character(Подзначение),
-    subord.pos = as.factor(Позиция.зависимой.клаузы.в.составе.главной),
-    subord.pos.ex = as.character(fix_commas(str_squish(Пример.на.позицию))),
-    subord.pos.ex.gl = as.character(fix_commas(str_squish(Глоссы_2))),
-    subord.pos.ex.tr.ru = as.character(Перевод_2),
-    mainpart.comp = as.factor(Состав.основной.части.коннектора),
-    comps = as.character(Компоненты.коннектора),
-    comps.sep = as.factor(Разрывность.частей.коннектора),
-    morph.pos = as.character(Позиция.морфемы.союза),
-    indep = as.factor(Способность.употребляться.в.независимом.предложении),
-    additive = as.factor(Присоединение.аддитивной.частицы),
+    lang = as.factor(Language),
+    lang.grp = as.factor(Language.group),    
+    linker = as.character(Linker),
+    term = as.character(Term),
+    meaning = as.factor(Temporal.meaning),
+    submeaning = as.character(Submeaning),
+    ss = as.factor(Same.subject.different.subject),
+    position = as.factor(Linker.position),
     .keep = 'none',
   ) -> linkers2
   # select(marker,
@@ -113,35 +107,35 @@ filterList <- function(values, name) {
   )
 }
 
-detailsFunc <- function(index, df) {
-  htmltools::div(
-    htmltools::p(
-      htmltools::tags$b("Другие части речи: "), 
-      df[index, ]$other_pos),
-    htmltools::p(
-      htmltools::tags$b("Другие значения: "), 
-      df[index, ]$other_senses))
-}
-
-makegl <- function(l1, l2, tr) {
-  if(!is.na(l1)) {
-    w1 <- str_split_1(l1, " ")
-    if(!is.na(l2)) {
-      w2 <- str_split_1(l2, " ")
-    }
-    else w2 <- c("")
-    if(!is.na(tr)) {
-      ft <- tr
-    }
-    else ft <- ""
-    htmltools::withTags(
-      div(
-      table(
-        tr(lapply(w1, function(x) td(style = "padding-right: 10px;", x))),
-        tr(lapply(w2, function(x) td(style = "padding-right: 10px;", x))),
-      ),
-      div(ft)
-      )
-    )
-  }
-}
+# detailsFunc <- function(index, df) {
+#   htmltools::div(
+#     htmltools::p(
+#       htmltools::tags$b("Другие части речи: "), 
+#       df[index, ]$other_pos),
+#     htmltools::p(
+#       htmltools::tags$b("Другие значения: "), 
+#       df[index, ]$other_senses))
+# }
+# 
+# makegl <- function(l1, l2, tr) {
+#   if(!is.na(l1)) {
+#     w1 <- str_split_1(l1, " ")
+#     if(!is.na(l2)) {
+#       w2 <- str_split_1(l2, " ")
+#     }
+#     else w2 <- c("")
+#     if(!is.na(tr)) {
+#       ft <- tr
+#     }
+#     else ft <- ""
+#     htmltools::withTags(
+#       div(
+#       table(
+#         tr(lapply(w1, function(x) td(style = "padding-right: 10px;", x))),
+#         tr(lapply(w2, function(x) td(style = "padding-right: 10px;", x))),
+#       ),
+#       div(ft)
+#       )
+#     )
+#   }
+# }

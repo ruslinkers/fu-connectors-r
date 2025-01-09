@@ -1,10 +1,8 @@
-name: "bezhta-linkers"
+name: "fu-connectors"
 navbar:
-  title: "Бежтинские коннекторы"
+  title: "Каталог темпоральных коннекторов в финно-угорских языках"
   left:
     - text: "Главная"
       href: index.html
     - text: "Коннекторы"
       href: linkers.html
-    - text: "Семантические поля"
-      href: semfields.html
