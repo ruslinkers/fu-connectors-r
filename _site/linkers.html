@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+
+
+<title>Коннекторы</title>
+
+<script src="site_libs/header-attrs-2.29/header-attrs.js"></script>
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<script src="site_libs/core-js-2.5.3/shim.min.js"></script>
+<script src="site_libs/react-18.2.0/react.min.js"></script>
+<script src="site_libs/react-18.2.0/react-dom.min.js"></script>
+<script src="site_libs/reactwidget-2.0.0/react-tools.js"></script>
+<link href="site_libs/htmltools-fill-0.5.8.1/fill.css" rel="stylesheet" />
+<script src="site_libs/htmlwidgets-1.6.4/htmlwidgets.js"></script>
+<link href="site_libs/reactable-0.4.4/reactable.css" rel="stylesheet" />
+<script src="site_libs/reactable-binding-0.4.4/reactable.js"></script>
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+
+
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+<style type="text/css">
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #adb5bd;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script type="text/javascript">
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark the anchor link active (and if it's in a dropdown, also mark that active)
+  var dropdown = menuAnchor.closest('li.dropdown');
+  if (window.bootstrap) { // Bootstrap 4+
+    menuAnchor.addClass('active');
+    dropdown.find('> .dropdown-toggle').addClass('active');
+  } else { // Bootstrap 3
+    menuAnchor.parent().addClass('active');
+    dropdown.addClass('active');
+  }
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "\e259";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "\e258";
+  font-family: 'Glyphicons Halflings';
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbar" data-bs-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Каталог темпоральных коннекторов в финно-угорских языках</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">Главная</a>
+</li>
+<li>
+  <a href="linkers.html">Коннекторы</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div id="header">
+
+
+
+
+</div>
+
+
+<style type="text/css">
+.main-container {
+  max-width: 100% !important;
+  margin: auto;
+}
+</style>
+<div class="reactable html-widget html-fill-item" id="linkertbl" style="width:auto;height:auto;"></div>
+<script type="application/json" data-for="linkertbl">{"x":{"tag":{"name":"Reactable","attribs":{"data":{"lang":["хантыйский","хантыйский","хантыйский","хантыйский","хантыйский","хантыйский","хантыйский","хантыйский","хантыйский","хантыйский","горномарийский","горномарийский","горномарийский","горномарийский","горномарийский","горномарийский","горномарийский","мокшанский","мокшанский","мокшанский","мокшанский","коми-зырянский","коми-зырянский","коми-зырянский","коми-зырянский","коми-зырянский","коми-зырянский","коми-зырянский","коми-зырянский","коми-зырянский","удмуртский","удмуртский","удмуртский","финский","финский","финский","финский","эстонский","ненецкий","ненецкий","ненецкий","ненецкий","ненецкий"],"lang.grp":["обско-угорские","обско-угорские","обско-угорские","обско-угорские","обско-угорские","обско-угорские","обско-угорские","обско-угорские","обско-угорские","обско-угорские","марийские","марийские","марийские","марийские","марийские","марийские","марийские","мордовские","мордовские","мордовские","мордовские","пермские","пермские","пермские","пермские","пермские","пермские","пермские","пермские","пермские","пермские","пермские","пермские","прибалтийско-финские","прибалтийско-финские","прибалтийско-финские","прибалтийско-финские","прибалтийско-финские","северно-самодийские","северно-самодийские","северно-самодийские","северно-самодийские","северно-самодийские"],"linker":["V-man","V-PTCP-POSS-LOC","V-PTCP-(POSS) măr-(POSS)-(LOC)","V-PTCP-(POSS) purajən","V-PTCP-(POSS) saxət","V-PTCP-(POSS) kʉtən","V-PTCP-(POSS) jeλpijən","V-PTCP-(POSS) jʉpijən","V-PRCP-(POSS) wɵnti","xɵn","V-en/ən","V-šəla-(POSS)","V-məkə-(POSS)","V-meškə-(POSS)","V-PTCP-(POSS) godəm","V-PTCP-(POSS) anzəc","V-PTCP-(POSS) paštek","V-z'","V-NMZ-EL-POSS","V-NMZ-ILL-(POSS)","V-mək","V-ig-INS","V-ig-ESS-POSS","V-NMZ-INS","V-ig-moz-(POSS)","V-ig-tyr","V-ig dyrji","V-ig kosta","V-ted'-(POSS)","kor","V-sa","V-ku-(POSS)","V-toz'","V-essa-(POSS)","V-en","V-tua-(POSS)","kun","V-des","V-s'/c'/∅","V-NMZ.PFV-xədə-(POSS)","V-PTCP-DAT-POSS","V-NMZ-(POSS) syerq","V-NMZ-(POSS) mal'əŋgəna"],"term":["деепричастие","деепричастие","причастие с послелогом","причастие с послелогом","причастие с послелогом","причастие с послелогом","причастие с послелогом","причастие с послелогом","причастие с послелогом","союз","деепричастие","деепричастие","деепричастие","деепричастие","причастие с послелогом","причастие с послелогом","причастие с послелогом","деепричастие","деепричастие","деепричастие","деепричастие","деепричастие","деепричастие","деепричастие","деепричастие","деепричастие","деепричастие","деепричастие","деепричастие","союз","деепричастие","деепричастие","деепричастие","деепричастие","деепричастие","деепричастие","союз","деепричастие","деепричастие","деепричастие","деепричастие","номинализация с послелогом","номинализация с послелогом"],"meaning":["одновременность, предшествование","одновременность","одновременность","одновременность","одновременность","одновременность","следование","предшествование","следование","общая временная соотнесенность","одновременность, предшествование","одновременность","предшествование","следование","общая временная соотнесенность","следование","предшествование","одновременность","одновременность","одновременность, следование","одновременность, предшествование","одновременность","одновременность","одновременность","одновременность","одновременность","одновременность","одновременность","следование","общая временная соотнесенность","одновременность, предшествование, последовательность","одновременность","одновременность, следование","одновременность","одновременность","предшествование","общая временная соотнесенность","одновременность","одновременность, предшествование, последовательность","предшествование","одновременность","одновременность","одновременность"],"submeaning":["сопровождающее обстоятельство","-","ограничительная","генерическая","неожиданная","промежуточная","стандартное","-","конечная граница","-","сопровождающее обстоятельство","-","-","стандартное, конечная граница","-","стандартное","-","сопровождающее обстоятельство","-","ограничительная, стандартное, конечная граница","-","-","-","сопровождающее обстоятельство","аттенуативное добавочное действие","интенсивное добавочное действие","-","-","стандартное, конечная граница","-","сопровождающее обстоятельство","-","ограничительная, стандартное, конечная граница","-","сопровождающее обстоятельство","-","-","-","-","-","-","-","-"],"ss":["SS","VarS","VarS","VarS","VarS","VarS","VarS","VarS","VarS","VarS","SS","VarS","VarS","VarS","VarS","VarS","VarS","SS","VarS","VarS","VarS","VarS","VarS","SS","SS","SS","VarS","VarS","VarS","VarS","SS","VarS","VarS","VarS","SS","VarS","VarS","SS","SS","VarS","VarS","VarS","VarS"],"position":["Cl V-conn","Cl V-conn","Cl V-conn","Cl V-conn","Cl V-conn","Cl V-conn","Cl V-conn","Cl V-conn","Cl V-conn","conn Cl","Cl V-conn","Cl V-conn","Cl V-conn","Cl V-conn","Cl V-conn","Cl V-conn","Cl V-conn","Cl V-conn","Cl V-conn","Cl V-conn","V-conn Cl","Cl V-conn","Cl V-conn","Cl V-conn","Cl V-conn","Cl V-conn","Cl V-conn","Cl V-conn","Cl V-conn","conn Cl","Cl V-conn","Cl V-conn","Cl V-conn","Cl V-conn","Cl V-conn","Cl V-conn","conn Cl","Cl V-conn","Cl V-conn","Cl V-conn","Cl V-conn","Cl V-conn","Cl V-conn"]},"columns":[{"id":"lang","name":"Язык","type":"factor","filterInput":{"name":"select","attribs":{"aria-label":"Filter lang","style":{"width":"100%","height":"28px"},"onChange":"function(_e){(function(event){Reactable.setFilter('linkertbl', 'lang', event.target.value || undefined)}).apply(event.target,[_e])}"},"children":[{"name":"option","attribs":{"value":""},"children":["Все"]},{"name":"option","attribs":{},"children":["горномарийский"]},{"name":"option","attribs":{},"children":["коми-зырянский"]},{"name":"option","attribs":{},"children":["мокшанский"]},{"name":"option","attribs":{},"children":["ненецкий"]},{"name":"option","attribs":{},"children":["удмуртский"]},{"name":"option","attribs":{},"children":["финский"]},{"name":"option","attribs":{},"children":["хантыйский"]},{"name":"option","attribs":{},"children":["эстонский"]}]}},{"id":"lang.grp","name":"Группа","type":"factor","filterInput":{"name":"select","attribs":{"aria-label":"Filter lang.grp","style":{"width":"100%","height":"28px"},"onChange":"function(_e){(function(event){Reactable.setFilter('linkertbl', 'lang.grp', event.target.value || undefined)}).apply(event.target,[_e])}"},"children":[{"name":"option","attribs":{"value":""},"children":["Все"]},{"name":"option","attribs":{},"children":["марийские"]},{"name":"option","attribs":{},"children":["мордовские"]},{"name":"option","attribs":{},"children":["обско-угорские"]},{"name":"option","attribs":{},"children":["пермские"]},{"name":"option","attribs":{},"children":["прибалтийско-финские"]},{"name":"option","attribs":{},"children":["северно-самодийские"]}]}},{"id":"linker","name":"Показатель","type":"character"},{"id":"term","name":"Термин","type":"character"},{"id":"meaning","name":"Значение","type":"factor","filterInput":{"name":"select","attribs":{"aria-label":"Filter meaning","style":{"width":"100%","height":"28px"},"onChange":"function(_e){(function(event){Reactable.setFilter('linkertbl', 'meaning', event.target.value || undefined)}).apply(event.target,[_e])}"},"children":[{"name":"option","attribs":{"value":""},"children":["Все"]},{"name":"option","attribs":{},"children":["общая временная соотнесенность"]},{"name":"option","attribs":{},"children":["одновременность"]},{"name":"option","attribs":{},"children":["одновременность, предшествование"]},{"name":"option","attribs":{},"children":["одновременность, предшествование, последовательность"]},{"name":"option","attribs":{},"children":["одновременность, следование"]},{"name":"option","attribs":{},"children":["предшествование"]},{"name":"option","attribs":{},"children":["следование"]}]}},{"id":"submeaning","name":"Подзначение","type":"character"},{"id":"ss","name":"Односубъектность","type":"factor","filterInput":{"name":"select","attribs":{"aria-label":"Filter ss","style":{"width":"100%","height":"28px"},"onChange":"function(_e){(function(event){Reactable.setFilter('linkertbl', 'ss', event.target.value || undefined)}).apply(event.target,[_e])}"},"children":[{"name":"option","attribs":{"value":""},"children":["Все"]},{"name":"option","attribs":{},"children":["SS"]},{"name":"option","attribs":{},"children":["VarS"]}]}},{"id":"position","name":"Позиция клаузы","type":"factor","filterInput":{"name":"select","attribs":{"aria-label":"Filter position","style":{"width":"100%","height":"28px"},"onChange":"function(_e){(function(event){Reactable.setFilter('linkertbl', 'position', event.target.value || undefined)}).apply(event.target,[_e])}"},"children":[{"name":"option","attribs":{"value":""},"children":["Все"]},{"name":"option","attribs":{},"children":["Cl V-conn"]},{"name":"option","attribs":{},"children":["conn Cl"]},{"name":"option","attribs":{},"children":["V-conn Cl"]}]}}],"groupBy":["lang.grp","lang"],"filterable":true,"defaultSorted":[{"id":"term","desc":false}],"defaultPageSize":100,"showSortable":true,"elementId":"linkertbl","dataKey":"4c9b5f63a53479870b3597eae5c28030"},"children":[]},"class":"reactR_markup"},"evals":["tag.attribs.columns.0.filterInput.attribs.onChange","tag.attribs.columns.1.filterInput.attribs.onChange","tag.attribs.columns.4.filterInput.attribs.onChange","tag.attribs.columns.6.filterInput.attribs.onChange","tag.attribs.columns.7.filterInput.attribs.onChange"],"jsHooks":[]}</script>
+
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
