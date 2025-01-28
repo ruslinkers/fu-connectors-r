@@ -6,3 +6,5 @@ navbar:
       href: index.html
     - text: "Коннекторы"
       href: linkers.html
+    - text: "На сайт проекта"
+      href: http://ruscon.belyaev.io
